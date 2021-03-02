@@ -4,7 +4,7 @@ from rest_framework import permissions
 from workouts.models import Workout
 
 
-class IsOwnerr(permissions.BasePermission):
+class IsOwner(permissions.BasePermission):
     """Checks whether the requesting user is also the owner of the existing object"""
 
     def has_object_permission(self, request, view, obj):
