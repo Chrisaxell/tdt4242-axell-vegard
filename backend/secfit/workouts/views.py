@@ -122,6 +122,7 @@ class WorkoutList(
     ordering_fields = ["name", "date", "owner__username"]
 
     def get(self, request, *args, **kwargs):
+        print('Hello')
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
