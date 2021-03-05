@@ -37,6 +37,16 @@ function createWorkout() {
     window.location.replace("workout.html");
 }
 
+function searchWorkouts() {
+    console.log('Searched!');
+}
+
+window.addEventListener("DOMContentLoaded", async () => {
+    let searchButton = document.querySelector("#btn-search-button");
+    searchButton.addEventListener("click", searchWorkouts);
+
+});
+
 window.addEventListener("DOMContentLoaded", async () => {
     let createButton = document.querySelector("#btn-create-workout");
     createButton.addEventListener("click", createWorkout);
