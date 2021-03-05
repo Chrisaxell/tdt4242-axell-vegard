@@ -1,3 +1,6 @@
+
+const keyword = '';
+
 async function fetchWorkouts(ordering, keyword) {
     let response = await sendRequest("GET", `${HOST}/api/workouts/?ordering=${ordering}`);
 
@@ -62,7 +65,6 @@ function createWorkout() {
 }
 
 async function searchWorkouts(keyword){
-    console.log('Searched!');
 
     let ordering = "-date";
 
@@ -131,9 +133,13 @@ async function searchWorkouts(keyword){
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
+   let searchInput = document.querySelector("#inpt-search-keyword");
+   searchInput.addEventListener("change", () => self.keyword = searchInput.value);
+});
+
+window.addEventListener("DOMContentLoaded", async () => {
     let searchButton = document.querySelector("#btn-search-button");
-    let keyword = '2';
-    searchButton.addEventListener("click", () => searchWorkouts(keyword));
+    searchButton.addEventListener("click", () => searchWorkouts(self.keyword));
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
