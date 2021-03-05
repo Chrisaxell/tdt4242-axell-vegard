@@ -1,4 +1,4 @@
-async function fetchWorkouts(ordering) {
+async function fetchWorkouts(ordering, keyword) {
     let response = await sendRequest("GET", `${HOST}/api/workouts/?ordering=${ordering}`);
 
     if (!response.ok) {
@@ -8,6 +8,10 @@ async function fetchWorkouts(ordering) {
 
         let workouts = data.results;
         let container = document.getElementById('div-content');
+
+        if (keyword !== '' && keyword !== undefined) {
+            workouts = reduceWorkouts(workouts, keyword);
+        }
 
         container.innerHTML = "";
 
@@ -32,15 +36,32 @@ async function fetchWorkouts(ordering) {
 
             container.appendChild(aWorkout);
         });
+
         return workouts;
     }
+}
+
+
+function reduceWorkouts(workouts, keyword) {
+
+    let reducedWorkouts = [];
+
+    workouts.map((workout) => {
+        let result = workout.name.search(keyword);
+        if(result === -1) {
+
+        } else {
+            reducedWorkouts.push(workout);
+        }
+    });
+    return reducedWorkouts;
 }
 
 function createWorkout() {
     window.location.replace("workout.html");
 }
 
-async function searchWorkouts(){
+async function searchWorkouts(keyword){
     console.log('Searched!');
 
     let ordering = "-date";
@@ -63,7 +84,7 @@ async function searchWorkouts(){
     if (ordering.includes("owner")) {
         ordering += "__username";
     }
-    let workouts = await fetchWorkouts(ordering);
+    let workouts = await fetchWorkouts(ordering, keyword);
 
     let tabEls = document.querySelectorAll('a[data-bs-toggle="list"]');
 
@@ -111,7 +132,8 @@ async function searchWorkouts(){
 
 window.addEventListener("DOMContentLoaded", async () => {
     let searchButton = document.querySelector("#btn-search-button");
-    searchButton.addEventListener("click", searchWorkouts);
+    let keyword = '2';
+    searchButton.addEventListener("click", () => searchWorkouts(keyword));
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -137,7 +159,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (ordering.includes("owner")) {
         ordering += "__username";
     }
-    let workouts = await fetchWorkouts(ordering);
+    let workouts = await fetchWorkouts(ordering,'');
 
     let tabEls = document.querySelectorAll('a[data-bs-toggle="list"]');
 
