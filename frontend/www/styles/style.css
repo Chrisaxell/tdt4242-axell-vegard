@@ -62,3 +62,16 @@
 .link-block {
   display: block;
 }
+
+
+/*
+Search-bar
+ */
+
+.search-bar-container {
+  display: flex;
+}
+
+.search-bar {
+  margin: 40px auto 40px auto;
+}
