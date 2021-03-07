@@ -4,7 +4,7 @@ Tests for the workouts application.
 from django.test import TestCase
 from datetime import datetime
 from .permissions import IsOwner, IsPublic, IsReadOnly, IsCoachAndVisibleToCoach, IsCoachOfWorkoutAndVisibleToCoach, IsOwnerOfWorkout, IsWorkoutPublic
-from .mock import MockRequest, MockView, MockWorkout
+from .mock import MockRequest, MockView, MockWorkout, MockOwner, MockWorkoutWithCoach, MockCoachRequest
 from .models import Workout
 from django.contrib.auth import get_user_model
 
@@ -47,8 +47,15 @@ class WorkoutsPermissionsTestCase(TestCase):
 
         # Initializing simple requests (Requests where only the user of the request is relevant)
         self.simple_request = MockRequest()
+        self.simple_safe_request = MockRequest()
         self.simple_faulty_request = MockRequest()
         self.simple_faulty_request.user = "Jonathan13"
+        self.simple_safe_request.method = "GET"
+
+        # Initializing simple coach requests
+        self.simple_coach_request = MockCoachRequest()
+        self.simple_faulty_coach_request = MockCoachRequest()
+        self.simple_faulty_coach_request.user = "Hannah"
 
         # Initializing complex request (Request where more than just the user is relevant)
         self.complex_request = MockRequest()
@@ -56,7 +63,19 @@ class WorkoutsPermissionsTestCase(TestCase):
         # Initializing view and object
         self.view = MockView()
         self.obj = MockWorkout()
+        self.obj_faulty = MockWorkout()
         self.obj.workout = MockWorkout()
+        self.obj_faulty.workout = MockWorkout()
+        self.obj_faulty.workout.visibility = "PR"
+        self.obj_faulty.visibility = "PR"
+
+        # Initializing workout with coach
+        self.obj_coach = MockWorkoutWithCoach()
+        self.obj_coach.owner = MockOwner()
+        self.obj_coach.workout = MockWorkoutWithCoach()
+        self.obj_coach.workout.owner = MockWorkoutWithCoach()
+        self.obj_coach.owner.coach = "Peter"
+        self.obj_coach.workout.owner.coach = "Peter"
 
         # Initializing and saving test-user
         user_obj = get_user_model()(username=self.userData["username"], email=self.userData["email"],
@@ -85,23 +104,23 @@ class WorkoutsPermissionsTestCase(TestCase):
         self.assertTrue(self.isOwnerOfWorkout.has_object_permission(self.simple_request, self.view, self.obj))
         self.assertFalse(self.isOwner.has_object_permission(self.simple_faulty_request, self.view, self.obj))
 
-    # def test_is_coach_and_visible_to_coach(self):
-    #     self.assertTrue(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #     self.assertFalse(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #
-    # def test_is_coach_of_workout_and_visible_to_coach(self):
-    #     self.assertTrue(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #     self.assertFalse(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #
-    # def test_is_public(self):
-    #     self.assertTrue(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #     self.assertFalse(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #
-    # def test_is_workout_public(self):
-    #     self.assertTrue(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #     self.assertFalse(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #
-    # def test_is_read_only(self):
-    #     self.assertTrue(self.isOwner.has_object_permission(self.request, self.view, self.obj))
-    #     self.assertFalse(self.isOwner.has_object_permission(self.request, self.view, self.obj))
+    def test_is_coach_and_visible_to_coach(self):
+        self.assertTrue(self.isCoachAndVisibleToCoach.has_object_permission(self.simple_coach_request, self.view, self.obj_coach))
+        self.assertFalse(self.isCoachAndVisibleToCoach.has_object_permission(self.simple_faulty_coach_request, self.view, self.obj_coach))
+
+    def test_is_coach_of_workout_and_visible_to_coach(self):
+        self.assertTrue(self.isCoachOfWorkoutAndVisibleToCoach.has_object_permission(self.simple_coach_request, self.view, self.obj_coach))
+        self.assertFalse(self.isCoachOfWorkoutAndVisibleToCoach.has_object_permission(self.simple_faulty_coach_request, self.view, self.obj_coach))
+
+    def test_is_public(self):
+        self.assertTrue(self.isPublic.has_object_permission(self.simple_request, self.view, self.obj))
+        self.assertFalse(self.isPublic.has_object_permission(self.simple_request, self.view, self.obj_faulty))
+
+    def test_is_workout_public(self):
+        self.assertTrue(self.isWorkoutPublic.has_object_permission(self.simple_request, self.view, self.obj))
+        self.assertFalse(self.isWorkoutPublic.has_object_permission(self.simple_request, self.view, self.obj_faulty))
+
+    def test_is_read_only(self):
+        self.assertTrue(self.isReadOnly.has_object_permission(self.simple_safe_request, self.view, self.obj))
+        self.assertFalse(self.isReadOnly.has_object_permission(self.simple_request, self.view, self.obj))
 

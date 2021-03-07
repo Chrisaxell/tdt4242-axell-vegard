@@ -5,6 +5,10 @@ class MockRequest(object):
     data = {"workout": None}
 
 
+class MockCoachRequest(object):
+    user = "Peter"
+
+
 class MockView(object):
     pass
 
@@ -12,3 +16,13 @@ class MockView(object):
 class MockWorkout(object):
     owner = "Thomas42"
     workout = None
+    visibility = "PU"
+
+
+class MockWorkoutWithCoach(object):
+    owner = None
+    workout = None
+
+
+class MockOwner(object):
+    coach = "Peter"
