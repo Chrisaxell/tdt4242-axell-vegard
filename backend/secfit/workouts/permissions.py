@@ -15,6 +15,7 @@ class IsOwnerOfWorkout(permissions.BasePermission):
     """Checks whether the requesting user is also the owner of the new or existing object"""
 
     def has_permission(self, request, view):
+
         if request.method == "POST":
             if request.data.get("workout"):
                 workout_id = request.data["workout"].split("/")[-2]
