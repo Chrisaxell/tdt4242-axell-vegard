@@ -19,14 +19,6 @@ cache:
   paths:
     - ~/.cache/pip/
 
-# This is a basic example for a gem or script which doesn't use
-# services such as redis or postgres
-before_script:
-  - python -V  # Print out python version for debugging
-  # Uncomment next line if your Django app needs a JS runtime:
-  # - apt-get update -q && apt-get install nodejs -yqq
-  - pip install -r backend/secfit/requirements.txt
-
 # To get Django tests to work you may need to create a settings file using
 # the following DATABASES:
 #
@@ -42,19 +34,28 @@ before_script:
 # }
 #
 # and then adding `--settings app.settings.ci` (or similar) to the test command
+stages:
+  - test
+  - deploy
 
-test:
+UnitTest:
+  stage: test
+  before_script:
+    - python -V
+    - pip install -r backend/secfit/requirements.txt
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
     - python backend/secfit/manage.py test workouts
     - python backend/secfit/manage.py test users
 
-staging:
-    type: deploy
-    stage: staging
+Deployment:
+    stage: deploy
     image: python:latest
     script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-    only:
-        - staging
+        - dpl --provider=heroku --app=$HEROKU_APP_APPNAME --api-key=$HEROKU_API_KEY
+        - export HEROKU_API_KEY=$HEROKU_APIKEY
+        - heroku run --app $HEROKU_APPNAME python backend/secfit/manage.py migrate
+    environment:
+      name: production
+      url: $HEROKU_APP_HOST
