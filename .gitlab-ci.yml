@@ -58,6 +58,6 @@ Deployment:
         - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_API_KEY
         - export HEROKU_API_KEY=$HEROKU_APIKEY
         - heroku run --app $HEROKU_APPNAME python backend/secfit/manage.py migrate
-    environment:
-      name: production
-      url: $HEROKU_APP_HOST
+    #environment:
+     # name: production
+      #url: $HEROKU_APP_HOST
