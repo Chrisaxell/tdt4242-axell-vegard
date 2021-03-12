@@ -47,4 +47,5 @@ test:
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
-    - python backend/secfit/manage.py test
+    - python ../backend/secfit/manage.py test workouts
+    - python ../ackend/secfit/manage.py test users
