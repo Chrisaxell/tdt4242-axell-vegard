@@ -108,7 +108,6 @@ function handleCancelDuringWorkoutEdit() {
 
 function handleEditWorkoutButtonClick() {
     let addExerciseButton = document.querySelector("#btn-add-exercise");
-    let removeExerciseButton = document.querySelector("#btn-remove-exercise");
     
     setReadOnly(false, "#form-workout");
     document.querySelector("#inputOwner").readOnly = true;  // owner field should still be readonly 
@@ -118,7 +117,6 @@ function handleEditWorkoutButtonClick() {
     cancelWorkoutButton.className = cancelWorkoutButton.className.replace(" hide", "");
     deleteWorkoutButton.className = deleteWorkoutButton.className.replace(" hide", "");
     addExerciseButton.className = addExerciseButton.className.replace(" hide", "");
-    removeExerciseButton.className = removeExerciseButton.className.replace(" hide", "");
 
     cancelWorkoutButton.addEventListener("click", handleCancelDuringWorkoutEdit);
 
