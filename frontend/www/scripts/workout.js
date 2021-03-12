@@ -221,12 +221,19 @@ async function createBlankExercise() {
     
     let divExercises = document.querySelector("#div-exercises");
     divExercises.appendChild(divExerciseContainer);
+
+    let deleteExerciseButtons = document.getElementsByClassName("delete-exercise-button");
+    for (let i = 0; i < deleteExerciseButtons.length; i++) {
+        deleteExerciseButtons[i].addEventListener("click", removeSingleExercise)
+    }
 }
 
-function removeExercise(event) {
-    let divExerciseContainers = document.querySelectorAll(".div-exercise-container");
-    if (divExerciseContainers && divExerciseContainers.length > 0) {
-        divExerciseContainers[divExerciseContainers.length - 1].remove();
+function removeSingleExercise(event) {
+    if (confirm("Are you sure you want to remove the exercise?")) {
+        (event.srcElement.parentNode).remove()
+    } else {
+        console.log(event.srcElement.parentNode)
+        console.log("cancelled")
     }
 }
 
@@ -312,10 +319,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     let postCommentButton = document.querySelector("#post-comment");
     let divCommentRow = document.querySelector("#div-comment-row");
     let buttonAddExercise = document.querySelector("#btn-add-exercise");
-    let buttonRemoveExercise = document.querySelector("#btn-remove-exercise");
 
     buttonAddExercise.addEventListener("click", createBlankExercise);
-    buttonRemoveExercise.addEventListener("click", removeExercise);
 
     const urlParams = new URLSearchParams(window.location.search);
     let currentUser = await getCurrentUser();
@@ -343,7 +348,6 @@ window.addEventListener("DOMContentLoaded", async () => {
         okWorkoutButton.className = okWorkoutButton.className.replace(" hide", "");
         cancelWorkoutButton.className = cancelWorkoutButton.className.replace(" hide", "");
         buttonAddExercise.className = buttonAddExercise.className.replace(" hide", "");
-        buttonRemoveExercise.className = buttonRemoveExercise.className.replace(" hide", "");
 
         okWorkoutButton.addEventListener("click", async () => await createWorkout());
         cancelWorkoutButton.addEventListener("click", handleCancelDuringWorkoutCreate);

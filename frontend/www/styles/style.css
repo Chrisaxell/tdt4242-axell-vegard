@@ -75,3 +75,36 @@ Search-bar
 .search-bar {
   margin: 40px auto 40px auto;
 }
+
+
+/*
+Exercise-single
+ */
+
+.delete-exercise-button {
+  display: flex;
+  margin-left: auto;
+  color: #e04545;
+  width: 43px;
+  border: solid 2px white;
+  border-radius: 10px;
+}
+
+.delete-exercise-button:hover {
+  color: #e04545;
+  border-color: #e04545;
+}
+
+.delete-exercise-button i {
+  font-size: 22px;
+  z-index: -100;
+}
+
+.div-exercise-container {
+  margin-bottom: 50px !important;
+}
+
+#btn-add-exercise {
+  margin-bottom: 75px !important;
+}
+

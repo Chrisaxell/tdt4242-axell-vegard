@@ -71,7 +71,6 @@
         </div>
         <div class="col-lg-6">
           <input type="button" class="btn btn-primary hide" id="btn-add-exercise" value="Add exercise">
-          <input type="button" class="btn btn-danger hide" id="btn-remove-exercise" value="Remove exercise">
         </div>
         <div class="col-lg-6"></div>
 
@@ -101,7 +100,8 @@
 
     <template id="template-exercise">
       <div class="row div-exercise-container g-3 mb-3">
-        <div class="col-lg-6"><h5>Exercise</h5></div>
+          <div class="col-lg-1"><h5>Exercise</h5></div>
+          <button type="button" class="btn col-lg-2 delete-exercise-button"><i class="fa fa-times"></i></button>
         <div class="col-lg-6"></div>
         <div class="col-lg-6">
           <label class="form-label exercise-type">Type</label>
