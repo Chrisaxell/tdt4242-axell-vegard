@@ -51,7 +51,7 @@ UnitTest:
 
 Deployment:
     stage: deploy
-    image: ruby:latest
+    image: ruby:2.4
     before_script:
       - gem install dpl
     script:
