@@ -6,6 +6,7 @@ async function createNewUser(event) {
     
     if (!response.ok) {
       let data = await response.json();
+      console.log(data);
       let alert = createAlert("Registration failed!", data);
       document.body.prepend(alert);
 

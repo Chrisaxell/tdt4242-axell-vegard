@@ -1,6 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from .serializers import UserSerializer
 from .models import User
+from .views import UserList
+from .mock import MockRequest
 
 # Create your tests here.
 
@@ -41,6 +43,33 @@ class UserCreationTestCase(TestCase):
         # We test that the password validation validates the correct password, but rejects a faulty password
         self.assertEquals(self.serializer.validate_password(self.userData["password"]), self.userData["password"])
         self.assertNotEqual(self.serializer.validate_password("WrongPassword"), self.userData["password"])
+
+
+class SignUpBoundaryTesting(TestCase):
+
+    userData = {
+        "username": "asdasd",
+        "email": "thom_as@coldmail.com",
+        "password": "wordpass321",
+        "phone_number": "asdasdasd",
+        "country": "NoMansLand",
+        "city": "Capitalum",
+        "street_address": "221B Baker Street"
+    }
+
+    def setUp(self):
+        # Initializing user serializer
+        self.ul = UserList()
+        self.request = MockRequest()
+        self.request.data = self.userData
+        self.ul.request = self.request
+        self.ul.format_kwarg = ""
+        # Create an entry of a user using the user-serializer
+        self.ul.create(self.request)
+
+    def test_username(self):
+        print("hello2")
+        self.assertTrue(True)
 
 
 
