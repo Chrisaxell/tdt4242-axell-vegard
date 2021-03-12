@@ -51,7 +51,9 @@ UnitTest:
 
 Deployment:
     stage: deploy
-    image: python:latest
+    image: ruby:latest
+    before_script:
+      - gem install dpl
     script:
         - dpl --provider=heroku --app=$HEROKU_APP_APPNAME --api-key=$HEROKU_API_KEY
         - export HEROKU_API_KEY=$HEROKU_APIKEY
