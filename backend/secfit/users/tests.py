@@ -54,7 +54,12 @@ class SignUpBoundaryTesting(TestCase):
         "phone_number": "asdasdasd",
         "country": "NoMansLand",
         "city": "Capitalum",
-        "street_address": "221B Baker Street"
+        "street_address": "221B Baker Street",
+        "password1": "pass",
+        "athletes": {},
+        "workouts": {},
+        "coach_files": {},
+        "athlete_files": {}
     }
 
     def setUp(self):
