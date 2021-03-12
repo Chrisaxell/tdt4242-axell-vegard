@@ -49,3 +49,12 @@ test:
   script:
     - python backend/secfit/manage.py test workouts
     - python backend/secfit/manage.py test users
+
+staging:
+    type: deploy
+    stage: staging
+    image: python:latest
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    only:
+        - staging
