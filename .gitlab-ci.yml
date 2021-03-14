@@ -49,8 +49,8 @@ UnitTest:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
     - python -V
-    #- python manage.py test workouts
-    #- python manage.py test users
+    - python manage.py test workouts
+    - python manage.py test users
 
 Deployment:
     stage: deploy
