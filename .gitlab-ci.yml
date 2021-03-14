@@ -60,7 +60,8 @@ Deployment:
       - apt-get install -y ruby-dev
       - gem install dpl
     script:
-        - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_BACKEND --api-key=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_FRONTEND --api-key=$HEROKU_API_KEY
         - export HEROKU_API_KEY=$HEROKU_APIKEY
         - heroku run --app $HEROKU_APPNAME python backend/secfit/manage.py migrate
     only:
