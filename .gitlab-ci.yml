@@ -1,11 +1,5 @@
-# This file is a template, and might need editing before it works on your project.
-# Official framework image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/python
 image: python:3.9.2
 
-# Pick zero or more services to be used on all builds.
-# Only needed when using a docker container to run your tests in.
-# Check out: http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 services:
   - mysql:latest
   - postgres:latest
@@ -19,21 +13,6 @@ cache:
   paths:
     - ~/.cache/pip/
 
-# To get Django tests to work you may need to create a settings file using
-# the following DATABASES:
-#
-# DATABASES = {
-#     'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'ci',
-#        'USER': 'postgres',
-#        'PASSWORD': 'postgres',
-#        'HOST': 'postgres',
-#        'PORT': '5432',
-#    },
-# }
-#
-# and then adding `--settings app.settings.ci` (or similar) to the test command
 stages:
   - test
   - deploy
@@ -45,12 +24,9 @@ UnitTest:
     - cd backend/secfit
     - apt-get update -qy
     - pip install -r requirements.txt
-  variables:
-    DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
-    - python -V
-    - python manage.py test workouts
     - python manage.py test users
+    - python manage.py test workouts
 
 Deployment:
     stage: deploy
