@@ -139,9 +139,8 @@ window.addEventListener("DOMContentLoaded", async () => {
         let exerciseData = await retrieveExercise(exerciseId);
         let currentUser = await getCurrentUser();
 
-        console.log(exerciseData);
-
         if (exerciseData["owner"] == currentUser.url) {
+            editButton.classList.remove("hide");
             editButton.addEventListener("click", handleEditExerciseButtonClick);
             deleteButton.addEventListener("click", (async (id) => await deleteExercise(id)).bind(undefined, exerciseId));
             okButton.addEventListener("click", (async (id) => await updateExercise(id)).bind(undefined, exerciseId));

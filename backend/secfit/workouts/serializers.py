@@ -213,7 +213,8 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ["url", "id", "name", "description", "unit", "instances"]
+        fields = ["url", "id", "name", "description", "unit", "instances", "owner"]
+        extra_kwargs = {"owner": {"read_only": True}}
 
 
 class RememberMeSerializer(serializers.HyperlinkedModelSerializer):
