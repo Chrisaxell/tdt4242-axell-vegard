@@ -2,7 +2,6 @@ image: python:3.9.2
 
 stages:
   - test
-  - confidence-check
   - deploy
 
 UnitTest:
@@ -12,16 +11,10 @@ UnitTest:
     - cd backend/secfit
     - apt-get update -qy
     - pip install -r requirements.txt
+    - python manage.py migrate
   script:
     - python manage.py test users
     - python manage.py test workouts
-
-e2e:chrome:
-  stage: confidence-check
-  services:
-    - selenium/standalone-chrome
-  script:
-    - npm run confidence-check --host=selenium__standalone-chrome
 
 Deployment:
     stage: deploy
