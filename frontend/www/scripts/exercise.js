@@ -90,6 +90,8 @@ async function retrieveExercise(id) {
             let newVal = exerciseData[key];
             input.value = newVal;
         }
+
+        return exerciseData
     }
 }
 
@@ -134,11 +136,16 @@ window.addEventListener("DOMContentLoaded", async () => {
     // view/edit
     if (urlParams.has('id')) {
         const exerciseId = urlParams.get('id');
-        await retrieveExercise(exerciseId);
+        let exerciseData = await retrieveExercise(exerciseId);
+        let currentUser = await getCurrentUser();
 
-        editButton.addEventListener("click", handleEditExerciseButtonClick);
-        deleteButton.addEventListener("click", (async (id) => await deleteExercise(id)).bind(undefined, exerciseId));
-        okButton.addEventListener("click", (async (id) => await updateExercise(id)).bind(undefined, exerciseId));
+        console.log(exerciseData);
+
+        if (exerciseData["owner"] == currentUser.url) {
+            editButton.addEventListener("click", handleEditExerciseButtonClick);
+            deleteButton.addEventListener("click", (async (id) => await deleteExercise(id)).bind(undefined, exerciseId));
+            okButton.addEventListener("click", (async (id) => await updateExercise(id)).bind(undefined, exerciseId));
+        }
     } 
     //create
     else {
