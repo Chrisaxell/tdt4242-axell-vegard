@@ -19,7 +19,7 @@ context('Actions', () => {
     cy.get("form").children().first().type("123")
         .next().next().type("2017-06-01T08:30")
         .next().next().next().type("Public")
-        .next().type("I did a nice workout without much result butt alot of glamor for my bois")
+        .next().type("I did a nice workout without much result")
         .next().next().get('[id="customFile"]')
         .attachFile(filepath)
 

@@ -28,7 +28,7 @@ context('Actions', () => {
     cy.get("form").children().first().type("title")
         .next().next().type("2017-06-01T08:30")
         .next().next().next().type("Public")
-        .next().type("I did a nice workout without much result butt alot of glamor for my bois")
+        .next().type("I did a nice workout without much result")
         .next().next().get('[id="customFile"]')
         .attachFile(filepath)
 
@@ -39,10 +39,10 @@ context('Actions', () => {
     cy.get("#btn-create-workout").click()
 
     cy.wait(2000)
-    cy.get("form").children().first().type("titleasdddddddddddddddddddddddddddddddddddddd")
+    cy.get("form").children().first().type("dddddddddddddddddddddddddddddddddddddd")
         .next().next().type("2017-06-01T08:30")
         .next().next().next().type("Public")
-        .next().type("I did a nice workout without much result butt alot of glamor for my bois")
+        .next().type("I did a nice workout without much result")
         .next().next().get('[id="customFile"]')
         .attachFile(filepath)
 
