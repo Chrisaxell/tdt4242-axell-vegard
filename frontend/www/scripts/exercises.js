@@ -24,6 +24,7 @@ async function fetchExerciseTypes(request) {
     return response;
 }
 
+
 function createExercise() {
     window.location.replace("exercise.html");
 }
