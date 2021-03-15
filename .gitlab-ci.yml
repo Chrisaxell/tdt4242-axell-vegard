@@ -12,7 +12,6 @@ UnitTest:
     - apt-get update -qy
     - pip install -r requirements.txt
   script:
-     - python -V
     - python manage.py test users
     - python manage.py test workouts
 
