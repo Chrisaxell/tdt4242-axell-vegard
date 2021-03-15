@@ -74,14 +74,15 @@ Search-bar
 
 .search-bar {
   margin: 40px auto 40px auto;
-  border: solid 2px lightgray;
+  border: solid 3px lightgray;
+  border-radius: 6px;
 }
 
 .search-bar input {
   border: none;
   outline: none;
   margin-left: 10px;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 #btn-search-button {
@@ -89,6 +90,7 @@ Search-bar
   height: 35px;
   padding-bottom: 30px;
   background: whitesmoke;
+  color: #224481;
 }
 
 /*
