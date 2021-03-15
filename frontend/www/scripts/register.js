@@ -2,6 +2,8 @@ async function createNewUser(event) {
     let form = document.querySelector("#form-register-user");
     let formData = new FormData(form);
 
+    console.log(formData);
+
     let response = await sendRequest("POST", `${HOST}/api/users/`, formData, "");
     
     if (!response.ok) {

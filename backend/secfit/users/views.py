@@ -34,9 +34,9 @@ class UserList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        print("Request: ", request)
-        print("Args: ", *args)
-        print("Kwargs: ", **kwargs)
+        # print("Request: ", request)
+        # print("Args: ", *args)
+        # print("Kwargs: ", **kwargs)
         return self.create(request, *args, **kwargs)
 
     def get_queryset(self):
