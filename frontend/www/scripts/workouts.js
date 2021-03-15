@@ -64,8 +64,6 @@ function createWorkout() {
     window.location.replace("workout.html");
 }
 
-export default searchWorkouts();
-
 async function searchWorkouts(keyword){
 
     let ordering = "-date";
