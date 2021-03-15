@@ -64,6 +64,8 @@ function createWorkout() {
     window.location.replace("workout.html");
 }
 
+export default searchWorkouts();
+
 async function searchWorkouts(keyword){
 
     let ordering = "-date";
@@ -130,6 +132,7 @@ async function searchWorkouts(keyword){
             }
         });
     }
+    return workouts;
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
