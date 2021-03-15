@@ -1,9 +1,8 @@
 image: python:3.9.2
 
 stages:
-  - build
   - test
-  - cypress
+  - test2
   - deploy
 
 UnitTest:
@@ -14,8 +13,8 @@ UnitTest:
     - apt-get update -qy
     - pip install -r requirements.txt
   script:
-    - python manage.py test users
-    - python manage.py test workouts
+    #- python manage.py test users
+    #- python manage.py test workouts
 
 test:
   image: node:latest
