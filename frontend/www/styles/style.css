@@ -74,8 +74,22 @@ Search-bar
 
 .search-bar {
   margin: 40px auto 40px auto;
+  border: solid 2px lightgray;
 }
 
+.search-bar input {
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+#btn-search-button {
+  vertical-align: center;
+  height: 35px;
+  padding-bottom: 30px;
+  background: whitesmoke;
+}
 
 /*
 Exercise-single
