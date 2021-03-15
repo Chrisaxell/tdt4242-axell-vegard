@@ -1,0 +1,46 @@
+image: python:3.9.2
+
+services:
+  - mysql:latest
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: database_name
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ee/ci/yaml/README.html#cache
+cache:
+  paths:
+    - ~/.cache/pip/
+
+stages:
+  - test
+  - deploy
+
+UnitTest:
+  stage: test
+  before_script:
+    - python -V
+    - cd backend/secfit
+    - apt-get update -qy
+    - pip install -r requirements.txt
+  script:
+    - python manage.py test users
+    - python manage.py test workouts
+
+Deployment:
+    stage: deploy
+    image: ruby:2.4
+    before_script:
+      - apt-get update -qy
+      - apt-get install -y ruby-dev
+      - gem install dpl
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_BACKEND --api-key=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_FRONTEND --api-key=$HEROKU_API_KEY
+        - export HEROKU_API_KEY=$HEROKU_APIKEY
+    only:
+        - master
+    #environment:
+     # name: production
+      #url: $HEROKU_APP_HOST
