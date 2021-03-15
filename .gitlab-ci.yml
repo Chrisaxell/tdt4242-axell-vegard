@@ -2,6 +2,7 @@ image: python:3.9.2
 
 stages:
   - test
+  - test2
   - deploy
 
 UnitTest:
@@ -12,8 +13,18 @@ UnitTest:
     - apt-get update -qy
     - pip install -r requirements.txt
   script:
-    - python manage.py test users
-    - python manage.py test workouts
+     - python -V
+    #- python manage.py test users
+    #- python manage.py test workouts
+
+test:
+  image: node:latest
+  stage: test2
+  script:
+    # install dependencies
+    - npm install
+    # run Cypress tests
+    - npm run work_out_test.js
 
 Deployment:
     stage: deploy
