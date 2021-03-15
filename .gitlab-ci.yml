@@ -1,18 +1,5 @@
 image: python:3.9.2
 
-services:
-  - mysql:latest
-  - postgres:latest
-
-variables:
-  POSTGRES_DB: database_name
-
-# This folder is cached between builds
-# http://docs.gitlab.com/ee/ci/yaml/README.html#cache
-cache:
-  paths:
-    - ~/.cache/pip/
-
 stages:
   - test
   - deploy
