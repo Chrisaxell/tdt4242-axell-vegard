@@ -45,36 +45,36 @@ class UserCreationTestCase(TestCase):
         self.assertNotEqual(self.serializer.validate_password("WrongPassword"), self.userData["password"])
 
 
-class SignUpBoundaryTesting(TestCase):
-
-    userData = {
-        "username": "asdasd",
-        "email": "thom_as@coldmail.com",
-        "password": "wordpass321",
-        "phone_number": "asdasdasd",
-        "country": "NoMansLand",
-        "city": "Capitalum",
-        "street_address": "221B Baker Street",
-        "password1": "pass",
-        "athletes": {},
-        "workouts": {},
-        "coach_files": {},
-        "athlete_files": {}
-    }
-
-    def setUp(self):
-        # Initializing user serializer
-        self.ul = UserList()
-        self.request = MockRequest()
-        self.request.data = self.userData
-        self.ul.request = self.request
-        self.ul.format_kwarg = ""
-        # Create an entry of a user using the user-serializer
-        self.ul.create(self.request)
-
-    def test_username(self):
-        print("hello2")
-        self.assertTrue(True)
+# class SignUpBoundaryTesting(TestCase):
+#
+#     userData = {
+#         "username": "asdasd",
+#         "email": "thom_as@coldmail.com",
+#         "password": "wordpass321",
+#         "phone_number": "asdasdasd",
+#         "country": "NoMansLand",
+#         "city": "Capitalum",
+#         "street_address": "221B Baker Street",
+#         "password1": "pass",
+#         "athletes": {},
+#         "workouts": {},
+#         "coach_files": {},
+#         "athlete_files": {}
+#     }
+#
+#     def setUp(self):
+#         # Initializing user serializer
+#         self.ul = UserList()
+#         self.request = MockRequest()
+#         self.request.data = self.userData
+#         self.ul.request = self.request
+#         self.ul.format_kwarg = ""
+#         # Create an entry of a user using the user-serializer
+#         self.ul.create(self.request)
+#
+#     def test_username(self):
+#         print("hello2")
+#         self.assertTrue(True)
 
 
 
