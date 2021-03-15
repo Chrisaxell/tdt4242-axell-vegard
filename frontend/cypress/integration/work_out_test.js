@@ -32,7 +32,7 @@ context('Actions', () => {
         .next().next().get('[id="customFile"]')
         .attachFile(filepath)
 
-    cy.get('btn-ok-workout').click()
+    cy.get('#btn-ok-workout').click()
   })
 
 
