@@ -74,8 +74,24 @@ Search-bar
 
 .search-bar {
   margin: 40px auto 40px auto;
+  border: solid 3px lightgray;
+  border-radius: 6px;
 }
 
+.search-bar input {
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  font-size: 17px;
+}
+
+#btn-search-button {
+  vertical-align: center;
+  height: 35px;
+  padding-bottom: 30px;
+  background: whitesmoke;
+  color: #224481;
+}
 
 /*
 Exercise-single
