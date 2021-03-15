@@ -2,6 +2,7 @@ image: python:3.9.2
 
 stages:
   - test
+  - test2
   - deploy
 
 UnitTest:
@@ -14,6 +15,17 @@ UnitTest:
   script:
     - python manage.py test users
     - python manage.py test workouts
+
+test:
+  image: node:latest
+  stage: test2
+  script:
+    # install dependencies
+    - npm ci
+    # start the server in the background
+    - npm run start:ci &
+    # run Cypress tests
+    - npm run e2e
 
 Deployment:
     stage: deploy
