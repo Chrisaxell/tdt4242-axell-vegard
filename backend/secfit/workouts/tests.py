@@ -1,12 +1,16 @@
 """
 Tests for the workouts application.
 """
-from django.test import TestCase
+from django.test import TestCase, Client
 from datetime import datetime
 from .permissions import IsOwner, IsPublic, IsReadOnly, IsCoachAndVisibleToCoach, IsCoachOfWorkoutAndVisibleToCoach, IsOwnerOfWorkout, IsWorkoutPublic
 from .mock import MockRequest, MockView, MockWorkout, MockOwner, MockWorkoutWithCoach, MockCoachRequest
 from .models import Workout
 from django.contrib.auth import get_user_model
+import copy
+from django.contrib.auth.models import User
+from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # Create your tests here.
@@ -124,3 +128,121 @@ class WorkoutsPermissionsTestCase(TestCase):
         self.assertTrue(self.isReadOnly.has_object_permission(self.simple_safe_request, self.view, self.obj))
         self.assertFalse(self.isReadOnly.has_object_permission(self.simple_request, self.view, self.obj))
 
+
+# class CreateWorkoutBoundaryTesting(TestCase):
+#
+#     workoutData_known_to_be_legal = {
+#         "url": "",
+#         "id": "",
+#         "name": "",
+#         "date": "",
+#         "notes": "",
+#         "owner": "",
+#         "owner_username": "",
+#         "visibility": "",
+#         "exercise_instances": "",
+#         "files": "",
+#     }
+#
+#     userData = {
+#         "username": "test",
+#         "email": "thom_as@coldmail.com",
+#         "password": "test123",
+#         "phone_number": "asdasdasd",
+#         "country": "NoMansLand",
+#         "city": "Capitalum",
+#         "street_address": "221B Baker Street",
+#         "password1": "asd",
+#         "athletes": {},
+#         "coach": "",
+#         "workouts": {},
+#         "coach_files": {},
+#         "athlete_files": {}
+#     }
+#
+#     workoutData = {}
+#
+#     def setUp(self):
+#         self.client = APIClient()
+#
+#         user = User.objects.create_user(username="test", email="a@a.com", password='test123')
+#         refresh = RefreshToken.for_user(user)
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + refresh.access_token)
+#
+#         self.workoutData = copy.deepcopy(self.workoutData_known_to_be_legal)
+#         response = self.client.post("http://localhost:8000/api/workouts/", self.workoutData, "json")
+#         print(response.json())
+#
+#     def test_something(self):
+#         self.assertTrue(True)
+#
+#     # def test_name(self):
+#     #     eq_domain = {
+#     #         "characters": "thomas",
+#     #         "integers": "123456",
+#     #         "symbols": "&%_#",
+#     #         "empty": "",
+#     #         "space": " ",
+#     #         "characters_integers_symbols": "thomas46&%",
+#     #         "characters_and_space": "thomas lingon",
+#     #         "short": "a",
+#     #         "long": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+#     #     }
+#     #
+#     #     self.userData = copy.deepcopy(self.userData_known_to_be_legal)
+#     #
+#     #     self.userData["email"] = "ra@a.com"
+#     #     self.userData["username"] = eq_domain["characters"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 201)
+#     #
+#     #     self.userData["email"] = "raa@a.com"
+#     #     self.userData["username"] = eq_domain["integers"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 201)
+#     #
+#     #     self.userData["email"] = "raaa@a.com"
+#     #     self.userData["username"] = eq_domain["symbols"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 400)
+#     #
+#     #     self.userData["email"] = "raaaa@a.com"
+#     #     self.userData["username"] = eq_domain["empty"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 400)
+#     #
+#     #     self.userData["email"] = "raaaaa@a.com"
+#     #     self.userData["username"] = eq_domain["space"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 400)
+#     #
+#     #     self.userData["email"] = "raaaaaa@a.com"
+#     #     self.userData["username"] = eq_domain["characters_integers_symbols"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 400)
+#     #
+#     #     self.userData["email"] = "raaaaaaa@a.com"
+#     #     self.userData["username"] = eq_domain["characters_and_space"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 400)
+#     #
+#     #     self.userData["email"] = "raaaaaaaa@a.com"
+#     #     self.userData["username"] = eq_domain["short"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 201)
+#     #
+#     #     self.userData["email"] = "raaaaaaaaa@a.com"
+#     #     self.userData["username"] = eq_domain["long"]
+#     #     response = self.client.post("http://localhost:8000/api/users/", self.userData, "application/json")
+#     #     self.assertEquals(response.status_code, 201)
+#     #
+#     # def test_date(self):
+#     #
+#     # def test_visibility(self):
+#     #
+#     # def test_notes(self):
+#     #
+#     # def test_files(self):
+#     #
+#     # def test_exerciseInstances(self):
+#     #
