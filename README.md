@@ -1,4 +1,4 @@
-# SecFit
+# SecFit YEET
 
 SecFit (Secure Fitness) is a hybrid mobile application for fitness logging.
 
