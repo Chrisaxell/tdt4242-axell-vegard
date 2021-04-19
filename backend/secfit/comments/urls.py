@@ -1,6 +1,6 @@
 from django.urls import path, include
-from comments.models import Comment, Like
-from comments.views import CommentList, CommentDetail, LikeList, LikeDetail
+from backend.secfit.comments.models import Comment, Like
+from backend.secfit.comments.views import CommentList, CommentDetail, LikeList, LikeDetail
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [

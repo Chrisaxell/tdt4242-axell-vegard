@@ -17,3 +17,4 @@ urlpatterns = [
         name="athletefile-detail",
     ),
 ]
+

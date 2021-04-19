@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import HyperlinkedRelatedField
-from comments.models import Comment, Like
-from workouts.models import Workout
+from backend.secfit.comments.models import Comment, Like
+from backend.secfit.workouts.models import Workout
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):

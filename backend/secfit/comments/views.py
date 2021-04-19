@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from rest_framework import generics, mixins
-from comments.models import Comment, Like
+from backend.secfit.comments.models import Comment, Like
 from rest_framework import permissions
-from comments.permissions import IsCommentVisibleToUser
-from workouts.permissions import IsOwner, IsReadOnly
-from comments.serializers import CommentSerializer, LikeSerializer
+from backend.secfit.comments.permissions import IsCommentVisibleToUser
+from backend.secfit.workouts.permissions import IsOwner, IsReadOnly
+from backend.secfit.comments.serializers import CommentSerializer, LikeSerializer
 from django.db.models import Q
 from rest_framework.filters import OrderingFilter
 
@@ -12,7 +11,6 @@ from rest_framework.filters import OrderingFilter
 class CommentList(
     mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView
 ):
-    # queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [OrderingFilter]

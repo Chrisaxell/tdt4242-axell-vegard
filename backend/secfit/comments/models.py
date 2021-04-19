@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
-from workouts.models import Workout
+from backend.secfit.workouts.models import Workout
 
 # Create your models here.
 class Comment(models.Model):

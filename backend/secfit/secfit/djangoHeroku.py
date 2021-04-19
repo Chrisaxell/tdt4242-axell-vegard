@@ -44,14 +44,13 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
         #else:
             #logger.info('$DATABASE_URL not found, falling back to previous settings!')
 
-    if test_runner:
+    if test_runner and ('CI' in os.environ):
         # Enable test runner if found in CI environment.
-        if 'CI' in os.environ:
-            config['TEST_RUNNER'] = 'django_heroku.HerokuDiscoverRunner'
+        config['TEST_RUNNER'] = 'django_heroku.HerokuDiscoverRunner'
 
     # Staticfiles configuration.
     if staticfiles:
-        #logger.info('Applying Heroku Staticfiles configuration to Django settings.')
+        # logger.info('Applying Heroku Staticfiles configuration to Django settings.')
 
         config['STATIC_ROOT'] = os.path.join(config['BASE_DIR'], 'staticfiles')
         config['STATIC_URL'] = '/static/'
@@ -69,48 +68,11 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
         config['STATICFILES_STORAGE'] = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     if allowed_hosts:
-        #logger.info('Applying Heroku ALLOWED_HOSTS configuration to Django settings.')
+        # logger.info('Applying Heroku ALLOWED_HOSTS configuration to Django settings.')
         config['ALLOWED_HOSTS'] = ['*']
-    """
-    if logging:
-        logger.info('Applying Heroku logging configuration to Django settings.')
 
-        config['LOGGING'] = {
-            'version': 1,
-            'disable_existing_loggers': False,
-            'formatters': {
-                'verbose': {
-                    'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
-                               'pathname=%(pathname)s lineno=%(lineno)s ' +
-                               'funcname=%(funcName)s %(message)s'),
-                    'datefmt': '%Y-%m-%d %H:%M:%S'
-                },
-                'simple': {
-                    'format': '%(levelname)s %(message)s'
-                }
-            },
-            'handlers': {
-                'null': {
-                    'level': 'DEBUG',
-                    'class': 'logging.NullHandler',
-                },
-                'console': {
-                    'level': 'DEBUG',
-                    'class': 'logging.StreamHandler',
-                    'formatter': 'verbose'
-                }
-            },
-            'loggers': {
-                'testlogger': {
-                    'handlers': ['console'],
-                    'level': 'INFO',
-                }
-            }
-        }
-    """
     # SECRET_KEY configuration.
-    if secret_key:
-        if 'SECRET_KEY' in os.environ:
-            #logger.info('Adding $SECRET_KEY to SECRET_KEY Django setting.')
-            # Set the Django setting from the environment variable.
-            config['SECRET_KEY'] = os.environ['SECRET_KEY']
+    if secret_key & ('SECRET_KEY' in os.environ):
+        # logger.info('Adding $SECRET_KEY to SECRET_KEY Django setting.')
+        # Set the Django setting from the environment variable.
+        config['SECRET_KEY'] = os.environ['SECRET_KEY']

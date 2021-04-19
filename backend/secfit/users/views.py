@@ -15,7 +15,7 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-from users.models import Offer, AthleteFile
+from backend.secfit.users.models import Offer, AthleteFile
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
@@ -154,6 +154,7 @@ class OfferDetail(
 
 
 class AthleteFileList(
+    object,
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
     CreateListModelMixin,
